@@ -78,6 +78,8 @@ function CreateStudio() {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("");
   const [previewScale, setPreviewScale] = useState(1);
+  const [framePos, setFramePos] = useState(50); // 0 = left edge, 100 = right edge
+  const [videoAspect, setVideoAspect] = useState(16 / 9);
 
   const videoRef = useRef(null);
   const musicRef = useRef(null);
@@ -116,10 +118,11 @@ function CreateStudio() {
 
   const handleVideoLoaded = () => {
     if (!videoRef.current) return;
-    const d = videoRef.current.duration;
-    setDuration(d);
+    const v = videoRef.current;
+    setDuration(v.duration);
     setStartTime(0);
-    setEndTime(d);
+    setEndTime(v.duration);
+    if (v.videoWidth && v.videoHeight) setVideoAspect(v.videoWidth / v.videoHeight);
     updateScale();
   };
   const handleTimeUpdate = () => {
@@ -382,11 +385,11 @@ function CreateStudio() {
   };
 
   /* ---------- export ---------- */
-  const exportVideo = async () => {
+  const exportVideo = async (mode = "landscape") => {
     if (!videoFile) return;
     setProcessing(true);
     setProgress(0);
-    setStatus("Preparing export…");
+    setStatus(mode === "short" ? "Preparing 9:16 Short…" : "Preparing export…");
     try {
       await loadFFmpeg();
       const ffmpeg = ffmpegRef.current;
@@ -448,8 +451,17 @@ function CreateStudio() {
         })
         .join(",");
 
+      // vertical Shorts: crop to 9:16 at the user's chosen frame position,
+      // then scale to 1080x1920 — BEFORE drawtext so text applies to the final frame
+      const pos = (framePos / 100).toFixed(3);
+      const cropChain =
+        mode === "short"
+          ? `crop='min(iw,ih*9/16)':ih:'(iw-min(iw,ih*9/16))*${pos}':0,scale=1080:1920`
+          : "";
+      const vParts = [cropChain, drawChain].filter(Boolean).join(",");
+
       const fc = [];
-      if (drawChain) fc.push(`[0:v]${drawChain}[vout]`);
+      if (vParts) fc.push(`[0:v]${vParts}[vout]`);
       if (hasMusic) {
         const delayMs = Math.round(musicStart * 1000);
         let m = `[1:a]volume=${musicVolume}`;
@@ -462,7 +474,7 @@ function CreateStudio() {
       }
 
       if (fc.length) args.push("-filter_complex", fc.join(";"));
-      args.push("-map", drawChain ? "[vout]" : "0:v");
+      args.push("-map", vParts ? "[vout]" : "0:v");
       if (hasMusic) {
         args.push("-map", "[aout]");
         if (!keepOriginalAudio) args.push("-shortest");
@@ -477,14 +489,15 @@ function CreateStudio() {
       const data = await ffmpeg.readFile("out.mp4");
       const blob = new Blob([data.buffer], { type: "video/mp4" });
       const url = URL.createObjectURL(blob);
+      const outName = mode === "short" ? "GrillStudio-Short.mp4" : "GrillStudio-Final.mp4";
       const a = document.createElement("a");
       a.href = url;
-      a.download = "GrillStudio-Final.mp4";
+      a.download = outName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
 
-      swapWorkingVideo(blob, "GrillStudio-Final.mp4");
+      swapWorkingVideo(blob, outName);
       setTextLayers([]);
       removeMusic();
       setActiveTool(null);
@@ -529,6 +542,19 @@ function CreateStudio() {
           onLoadedMetadata={handleVideoLoaded}
           onTimeUpdate={handleTimeUpdate}
         />
+        {activeTool === "frame" && (() => {
+          const cropFrac = Math.min(1, (9 / 16) / videoAspect);
+          if (cropFrac >= 1) return null; // already vertical — nothing gets cropped
+          const leftPct = (1 - cropFrac) * (framePos / 100) * 100;
+          const rightPct = (1 - cropFrac) * (1 - framePos / 100) * 100;
+          return (
+            <>
+              <div className="crop-mask" style={{ left: 0, width: `${leftPct}%` }} />
+              <div className="crop-mask" style={{ right: 0, width: `${rightPct}%` }} />
+              <div className="crop-window" style={{ left: `${leftPct}%`, width: `${cropFrac * 100}%` }} />
+            </>
+          );
+        })()}
         {["top", "center", "bottom"].map((pos) => {
           const group = visibleTextLayers.filter((l) => l.position === pos);
           if (group.length === 0) return null;
@@ -560,9 +586,15 @@ function CreateStudio() {
         <button role="tab" aria-selected={activeTool === "polish"} className={activeTool === "polish" ? "tab active" : "tab"} onClick={() => toggleTool("polish")}>
           {Icon.polish} Polish
         </button>
+        <button role="tab" aria-selected={activeTool === "frame"} className={activeTool === "frame" ? "tab active" : "tab"} onClick={() => toggleTool("frame")}>
+          {Icon.captions} Frame
+        </button>
         <span className="toolbar-spacer" />
-        <button className="export-button" onClick={exportVideo} disabled={processing}>
-          {Icon.export} {processing ? "Rendering…" : "Export MP4"}
+        <button className="ghost-button" onClick={() => exportVideo("landscape")} disabled={processing} title="Original aspect ratio">
+          {Icon.export} 16:9
+        </button>
+        <button className="export-button" onClick={() => exportVideo("short")} disabled={processing}>
+          {Icon.export} {processing ? "Rendering…" : "Export Short 9:16"}
         </button>
       </div>
 
@@ -606,6 +638,30 @@ function CreateStudio() {
       {activeTool === "text" && (
         <section className="panel">
           <h2>Text</h2>
+          <div className="panel-actions" style={{ marginTop: 0, marginBottom: 18 }}>
+            <button
+              className="ghost-button"
+              onClick={() =>
+                setTextLayers((l) => [
+                  ...l,
+                  { id: Date.now(), text: "CHARCOAL CHICKEN", start: 0, end: Math.min(3, duration), position: "top", size: 64, color: "#FFB03A", caption: false },
+                ])
+              }
+            >
+              + Title bar (first 3s)
+            </button>
+            <button
+              className="ghost-button"
+              onClick={() =>
+                setTextLayers((l) => [
+                  ...l,
+                  { id: Date.now(), text: "LIKE • SUBSCRIBE • FOLLOW THE GRILL JOURNEY", start: Math.max(0, duration - 3), end: duration, position: "bottom", size: 40, color: "#F6EFE5", caption: false },
+                ])
+              }
+            >
+              + CTA outro (last 3s)
+            </button>
+          </div>
           <input type="text" className="text-input" placeholder="Type your caption…" value={newText} onChange={(e) => setNewText(e.target.value)} />
           <div className="options-row">
             <div><label>Show from</label><input type="number" min="0" max={duration} step="0.1" value={newTextStart} onChange={(e) => setNewTextStart(e.target.value)} /></div>
@@ -781,6 +837,22 @@ function CreateStudio() {
               </div>
             </div>
           )}
+        </section>
+      )}
+
+      {/* FRAME */}
+      {activeTool === "frame" && (
+        <section className="panel">
+          <h2>Short framing</h2>
+          <p className="panel-note">
+            The bright window on the preview is exactly what the 9:16 Short export keeps.
+            Slide it so the food stays in frame — scrub the video to check the whole clip.
+          </p>
+          <div className="music-setting">
+            <label>Position</label>
+            <input type="range" min="0" max="100" step="1" value={framePos} onChange={(e) => setFramePos(Number(e.target.value))} />
+            <span className="timecode">{framePos < 35 ? "left" : framePos > 65 ? "right" : "center"}</span>
+          </div>
         </section>
       )}
 

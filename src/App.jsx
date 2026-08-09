@@ -19,7 +19,7 @@ function App() {
             <button className={mode === "grow" ? "mode-tab active" : "mode-tab"} onClick={() => setMode("grow")}>Grow</button>
           </nav>
         </div>
-        <p>{mode === "create" ? "Cut, caption, score and polish your video — right in the browser. Nothing gets uploaded." : "Research, ideas and insight — fuel for your next upload."}</p>
+        <p>{mode === "create" ? "Turn your grill footage into Shorts — right in the browser. Nothing gets uploaded." : "Research, ideas and insight — fuel for your next upload."}</p>
       </header>
       <main className="editor">{mode === "create" ? <CreateStudio /> : <GrowStudio />}</main>
     </div>

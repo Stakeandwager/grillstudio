@@ -9,13 +9,13 @@ Updated: 2026-10-21
 - Base local commit: `c40db83` (`Add persistent screenplay scene inventory`)
 - `origin`: `https://github.com/Stakeandwager/grillstudio.git`
 - `origin/main` was `b9402fd` when checked. The existing local branch had no upstream configured.
-- The scene inventory commit is local and was not pushed: the HTTPS Git credential helper could not persist credentials and no interactive TTY was available. No force push or alternative-history push was attempted.
+- `c40db83` and `5822f81` are pushed to `origin/codex/film-project-foundation`; GitHub confirmed the full `5822f816f9a83a77abd746e24ba346cfd0ac49b6` commit SHA. The branch tracks the matching upstream branch. `main` was not changed.
 
 ## Implemented capabilities
 
 - Film Project parses `INT.`, `EXT.`, and related screenplay headings into an ordered scene inventory.
 - Scenes retain footage notes and coverage status across edits; local project autosaves and JSON import/export are part of the preceding `c40db83` implementation.
-- Current uncommitted work adds a local, text-led 2D animatic preview: per-scene duration, still/slow-push/pan-left/pan-right motion, timeline playback, and browser WebM recording. The generated boards are abstract typographic previews, not AI-generated artwork or a full timeline editor.
+- Commit `5822f81` adds a local, text-led 2D animatic preview: per-scene duration, still/slow-push/pan-left/pan-right motion, timeline playback, and browser WebM recording. The generated boards are abstract typographic previews, not AI-generated artwork or a full timeline editor.
 - `npm run build` now loads the existing Vite config through the Vite API (`scripts/build.mjs`), avoiding the sandbox EPERM in Vite's config-bundling traversal while retaining the React plugin/config.
 
 ## Verification performed
@@ -36,5 +36,4 @@ Updated: 2026-10-21
 1. Perform a full interactive browser pass: import a sample screenplay, inspect scenes, change notes/settings, reload, and confirm local persistence.
 2. Export/import the project JSON in a fresh project and verify screenplay, notes, footage status, and animatic settings survive.
 3. Test WebM recording and verify the existing video editor and YouTube research features.
-4. Review and commit the current implementation after the UI checks; push the working branch only after GitHub authentication is available.
-5. Continue with the next product improvement: connect storyboard shots to real footage clips while retaining the local privacy-first workflow.
+4. Once the interactive UI checks pass, implement the next product improvement: connect storyboard shots to real footage clips while retaining the local privacy-first workflow.

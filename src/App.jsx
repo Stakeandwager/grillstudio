@@ -29,21 +29,30 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 font-sans flex flex-col">
+    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', color: '#f5f5f5', fontFamily: 'sans-serif', display: 'flex', flexDirection: 'column' }}>
       {/* Top Navbar */}
-      <header className="border-b border-neutral-800 bg-neutral-900 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">GrillStudio</span>
-          <span className="text-xs uppercase tracking-wider bg-neutral-800 px-2 py-1 rounded text-orange-400 font-semibold">AI Filmmaking Suite v3.0</span>
+      <header style={{ borderBottom: '1px solid #262626', backgroundColor: '#121212', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '24px', fontWeight: 'bold', background: 'linear-gradient(to right, #f97316, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>GrillStudio</span>
+          <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', backgroundColor: '#262626', padding: '4px 8px', borderRadius: '4px', color: '#fb923c', fontWeight: '600' }}>AI Filmmaking Suite v3.0</span>
         </div>
-        <nav className="flex space-x-2">
+        <nav style={{ display: 'flex', gap: '8px' }}>
           {['screenplay', 'assets', 'timeline', 'export'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded text-sm font-medium capitalize transition-colors ${
-                activeTab === tab ? 'bg-orange-600 text-white' : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
-              }`}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                textTransform: 'capitalize',
+                cursor: 'pointer',
+                backgroundColor: activeTab === tab ? '#ea580c' : 'transparent',
+                color: activeTab === tab ? '#ffffff' : '#a3a3a3',
+                border: 'none',
+                transition: 'background-color 0.2s'
+              }}
             >
               {tab}
             </button>
@@ -52,36 +61,34 @@ export default function App() {
       </header>
 
       {/* Main Workspace */}
-      <main className="flex-1 p-6 overflow-y-auto">
+      <main style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
         {activeTab === 'screenplay' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
-            <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-5 flex flex-col">
-              <h2 className="text-lg font-semibold mb-3">Screenplay Parser</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', height: '100%' }}>
+            <div style={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '12px', color: '#fff' }}>Screenplay Parser</h2>
               <textarea
                 value={screenplayText}
                 onChange={(e) => setScreenplayText(e.target.value)}
-                className="w-full flex-1 bg-neutral-950 border border-neutral-800 rounded p-3 text-sm font-mono text-neutral-300 resize-none focus:outline-none focus:border-orange-500"
+                style={{ width: '100%', flex: 1, backgroundColor: '#0a0a0a', border: '1px solid #262626', borderRadius: '6px', padding: '12px', fontSize: '14px', fontFamily: 'monospace', color: '#d4d4d4', resize: 'none', outline: 'none', minHeight: '200px' }}
                 rows="12"
               />
               <button
                 onClick={parseScreenplay}
-                className="mt-4 bg-orange-600 hover:bg-orange-500 text-white font-medium py-2 px-4 rounded transition-colors"
+                style={{ marginTop: '16px', backgroundColor: '#ea580c', color: '#fff', fontWeight: '500', padding: '10px 16px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
               >
                 Extract Scene Breakdown
               </button>
             </div>
-            <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-5 flex flex-col">
-              <h2 className="text-lg font-semibold mb-3">Scene Coverage & Inventory</h2>
-              <div className="flex-1 overflow-y-auto space-y-3">
+            <div style={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '12px', color: '#fff' }}>Scene Coverage & Inventory</h2>
+              <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {scenes.map(scene => (
-                  <div key={scene.id} className="bg-neutral-950 border border-neutral-800 p-3 rounded flex items-center justify-between">
+                  <div key={scene.id} style={{ backgroundColor: '#0a0a0a', border: '1px solid #262626', padding: '12px 16px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
-                      <p className="font-mono text-sm font-bold text-orange-400">{scene.heading}</p>
-                      <p className="text-xs text-neutral-400 mt-1">Assigned Asset: {scene.asset || 'None'}</p>
+                      <p style={{ fontFamily: 'monospace', fontSize: '14px', fontWeight: 'bold', color: '#fb923c', margin: 0 }}>{scene.heading}</p>
+                      <p style={{ fontSize: '12px', color: '#737373', margin: '4px 0 0 0' }}>Assigned Asset: {scene.asset || 'None'}</p>
                     </div>
-                    <span className={`text-xs px-2.5 py-1 rounded uppercase font-bold ${
-                      scene.status === 'covered' ? 'bg-green-950 text-green-400 border border-green-800' : 'bg-amber-950 text-amber-400 border border-amber-800'
-                    }`}>
+                    <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', textTransform: 'uppercase', fontWeight: 'bold', backgroundColor: scene.status === 'covered' ? '#052e16' : '#451a03', color: scene.status === 'covered' ? '#4ade80' : '#fbbf24', border: `1px solid ${scene.status === 'covered' ? '#166534' : '#92400e'}` }}>
                       {scene.status}
                     </span>
                   </div>
@@ -92,19 +99,19 @@ export default function App() {
         )}
 
         {activeTab === 'assets' && (
-          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-4">Media Asset Library</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div style={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', padding: '24px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px', color: '#fff' }}>Media Asset Library</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
               {assets.map(asset => (
-                <div key={asset.id} className="bg-neutral-950 border border-neutral-800 p-4 rounded-lg flex flex-col justify-between">
+                <div key={asset.id} style={{ backgroundColor: '#0a0a0a', border: '1px solid #262626', padding: '16px', borderRadius: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
-                    <div className="h-32 bg-neutral-900 rounded mb-3 flex items-center justify-center text-neutral-600 font-mono text-xs">PREVIEW WINDOW</div>
-                    <p className="font-semibold text-sm">{asset.name}</p>
-                    <p className="text-xs text-neutral-400 mt-1">Duration: {asset.duration}</p>
+                    <div style={{ height: '120px', backgroundColor: '#121212', borderRadius: '6px', marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#525252', fontFamily: 'monospace', fontSize: '12px' }}>PREVIEW WINDOW</div>
+                    <p style={{ fontWeight: '600', fontSize: '14px', margin: '0 0 4px 0', color: '#fff' }}>{asset.name}</p>
+                    <p style={{ fontSize: '12px', color: '#737373', margin: 0 }}>Duration: {asset.duration}</p>
                   </div>
-                  <div className="flex gap-1 mt-4">
+                  <div style={{ display: 'flex', gap: '4px', marginTop: '16px' }}>
                     {asset.tags.map(tag => (
-                      <span key={tag} className="bg-neutral-800 text-neutral-300 text-[10px] px-2 py-0.5 rounded">{tag}</span>
+                      <span key={tag} style={{ backgroundColor: '#262626', color: '#d4d4d4', fontSize: '10px', padding: '2px 6px', borderRadius: '4px' }}>{tag}</span>
                     ))}
                   </div>
                 </div>
@@ -114,16 +121,16 @@ export default function App() {
         )}
 
         {activeTab === 'timeline' && (
-          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 flex flex-col h-full">
-            <h2 className="text-lg font-semibold mb-4">Multi-Track Timeline & Animation Keyframes</h2>
-            <div className="space-y-4 flex-1">
+          <div style={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', padding: '24px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px', color: '#fff' }}>Multi-Track Timeline & Animation Keyframes</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
               {timelineTracks.map(track => (
-                <div key={track.id} className="bg-neutral-950 border border-neutral-800 p-3 rounded">
-                  <div className="flex justify-between text-xs text-neutral-400 mb-2">
+                <div key={track.id} style={{ backgroundColor: '#0a0a0a', border: '1px solid #262626', padding: '16px', borderRadius: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#737373', marginBottom: '8px' }}>
                     <span>{track.name}</span>
                     <span>Length: {track.length}s</span>
                   </div>
-                  <div className="h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center px-3 text-sm text-orange-400 font-mono">
+                  <div style={{ height: '40px', backgroundColor: '#121212', borderRadius: '4px', border: '1px solid #262626', display: 'flex', alignItems: 'center', padding: '0 12px', fontSize: '14px', color: '#fb923c', fontFamily: 'monospace' }}>
                     [ Clip: {track.clip} ]
                   </div>
                 </div>
@@ -133,12 +140,12 @@ export default function App() {
         )}
 
         {activeTab === 'export' && (
-          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 max-w-xl mx-auto">
-            <h2 className="text-lg font-semibold mb-2">Project Delivery & Pipeline Export</h2>
-            <p className="text-sm text-neutral-400 mb-6">Export project EDL, render sequence, or generate a Blender animation script.</p>
+          <div style={{ backgroundColor: '#171717', border: '1px solid #262626', borderRadius: '8px', padding: '32px', maxWidth: '500px', margin: '40px auto', textAlign: 'center' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '8px', color: '#fff' }}>Project Delivery & Pipeline Export</h2>
+            <p style={{ fontSize: '14px', color: '#a3a3a3', marginBottom: '24px' }}>Export project EDL, render sequence, or generate a Blender animation script.</p>
             <button
               onClick={() => alert("Blender Python script & timeline EDL generated successfully!")}
-              className="w-full bg-orange-600 hover:bg-orange-500 text-white font-medium py-3 rounded transition-colors"
+              style={{ width: '100%', backgroundColor: '#ea580c', color: '#fff', fontWeight: '500', padding: '12px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '15px' }}
             >
               Export Blender Python Pipeline (.py)
             </button>

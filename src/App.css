@@ -540,6 +540,25 @@ body {
 .empty-scenes { margin-top: 18px; padding: 20px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); line-height: 1.6; }
 .empty-scenes code { color: var(--ember-1); }
 
+.animatic-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 18px; margin-top: 20px; }
+.animatic-viewer-wrap { min-width: 0; }
+.animatic-canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 10px; background: #101117; }
+.animatic-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.animatic-time { margin-left: auto; color: var(--muted); font-family: var(--font-mono); font-size: 13px; }
+.animatic-scenes h3, .animatic-settings h3 { margin: 0 0 10px; font-family: var(--font-display); }
+.animatic-scenes { display: flex; flex-direction: column; gap: 8px; }
+.animatic-scene { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--coal); color: var(--ink); text-align: left; cursor: pointer; }
+.animatic-scene.active { border-color: var(--ember-2); box-shadow: var(--glow); }
+.animatic-scene > span, .animatic-scene small { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.animatic-scene strong { font-size: 13px; }
+.animatic-settings { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+.animatic-setting-row { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; margin-top: 14px; }
+.animatic-setting-row label { color: var(--muted); font-size: 13px; }
+.animatic-setting-row input, .animatic-setting-row select { padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--coal); color: var(--ink); font-family: var(--font-body); }
+.animatic-setting-row input { width: 100px; }
+.animatic-setting-row select { min-width: 130px; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
 .music-setting { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .music-setting label { min-width: 120px; color: var(--muted); font-size: 14px; }
 
@@ -684,6 +703,8 @@ body {
   .metric-row { flex-direction: column; }
   .project-heading-row { flex-direction: column; }
   .project-actions { justify-content: flex-start; }
+  .animatic-layout { grid-template-columns: 1fr; }
+  .animatic-scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

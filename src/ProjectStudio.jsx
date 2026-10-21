@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { parseScreenplay } from "./filmProject.js";
+import AnimaticStudio from "./AnimaticStudio.jsx";
 
 const STORAGE_KEY = "grillstudio.film-project.v1";
 const emptyProject = () => ({
@@ -30,6 +31,7 @@ function persistProject(value) {
 function ProjectStudio() {
   const [project, setProject] = useState(loadProject);
   const [storageError, setStorageError] = useState(false);
+  const [showAnimatic, setShowAnimatic] = useState(false);
   const importRef = useRef(null);
   const scriptRef = useRef(null);
   const scenes = useMemo(() => parseScreenplay(project.screenplay, project.scenes), [project.screenplay, project.scenes]);
@@ -104,6 +106,10 @@ function ProjectStudio() {
     }
   };
 
+  if (showAnimatic) {
+    return <div className="project-studio"><AnimaticStudio scenes={scenes} projectTitle={project.title} onUpdateScene={updateScene} onClose={() => setShowAnimatic(false)} /></div>;
+  }
+
   return (
     <div className="project-studio">
       <section className="panel">
@@ -113,6 +119,7 @@ function ProjectStudio() {
             <p className="panel-note">Paste a screenplay or import a plain text script. Scene headings beginning with INT. or EXT. become a coverage checklist.</p>
           </div>
           <div className="project-actions">
+            <button className="ghost-button" disabled={!scenes.length} onClick={() => setShowAnimatic(true)}>Preview animatic</button>
             <button className="ghost-button" onClick={() => importRef.current?.click()}>Open project</button>
             <button className="ember-button" onClick={exportProject}>Save project file</button>
             <input ref={importRef} type="file" accept="application/json,.json" hidden onChange={importProject} />

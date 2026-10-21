@@ -517,6 +517,29 @@ body {
 
 .music-file strong { color: var(--ink); font-weight: 600; font-size: 14px; }
 
+/* ============ film project ============ */
+.project-studio { display: flex; flex-direction: column; gap: 22px; }
+.project-heading-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.project-heading-row .panel-note { margin-bottom: 0; }
+.project-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.project-actions .ghost-button, .project-actions .ember-button { white-space: nowrap; }
+.project-label { display: block; margin: 18px 0 8px; color: var(--muted); font-size: 13px; }
+.screenplay-input { display: block; min-height: 220px; resize: vertical; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; }
+.script-import-row { display: flex; align-items: center; gap: 12px; }
+.script-import-row span { color: var(--muted); font-size: 12px; }
+.coverage-count { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ember-1); font-family: var(--font-mono); white-space: nowrap; }
+.scene-list { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.scene-card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--coal); }
+.scene-card-heading { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.scene-card-heading strong { flex: 1; min-width: 220px; font-family: var(--font-display); font-size: 16px; }
+.scene-number { display: inline-block; margin-right: 10px; color: var(--ember-1); font-family: var(--font-mono); font-size: 12px; }
+.scene-status-label { color: var(--muted); font-size: 12px; }
+.scene-card select { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); font-family: var(--font-body); }
+.scene-synopsis { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.scene-card .project-label { margin-top: 12px; }
+.empty-scenes { margin-top: 18px; padding: 20px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); line-height: 1.6; }
+.empty-scenes code { color: var(--ember-1); }
+
 .music-setting { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .music-setting label { min-width: 120px; color: var(--muted); font-size: 14px; }
 
@@ -659,6 +682,8 @@ body {
   .toolbar-spacer { display: none; }
   .export-button { width: 100%; justify-content: center; }
   .metric-row { flex-direction: column; }
+  .project-heading-row { flex-direction: column; }
+  .project-actions { justify-content: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Icon } from "./icons.jsx";
 import CreateStudio from "./CreateStudio.jsx";
 import GrowStudio from "./GrowStudio.jsx";
+import ProjectStudio from "./ProjectStudio.jsx";
 import "./App.css";
 
 function App() {
@@ -15,13 +16,14 @@ function App() {
             <h1><span className="ember-text">Grill</span>Studio</h1>
           </div>
           <nav className="mode-switch" aria-label="Studio mode">
+            <button className={mode === "project" ? "mode-tab active" : "mode-tab"} onClick={() => setMode("project")}>Film Project</button>
             <button className={mode === "create" ? "mode-tab active" : "mode-tab"} onClick={() => setMode("create")}>Create</button>
             <button className={mode === "grow" ? "mode-tab active" : "mode-tab"} onClick={() => setMode("grow")}>Grow</button>
           </nav>
         </div>
-        <p>{mode === "create" ? "Turn your grill footage into Shorts — right in the browser. Nothing gets uploaded." : "Research, ideas and insight — fuel for your next upload."}</p>
+        <p>{mode === "project" ? "Break a screenplay into scenes, track footage coverage, and keep project notes on this device." : mode === "create" ? "Turn your grill footage into Shorts — right in the browser. Nothing gets uploaded." : "Research, ideas and insight — fuel for your next upload."}</p>
       </header>
-      <main className="editor">{mode === "create" ? <CreateStudio /> : <GrowStudio />}</main>
+      <main className="editor">{mode === "project" ? <ProjectStudio /> : mode === "create" ? <CreateStudio /> : <GrowStudio />}</main>
     </div>
   );
 }

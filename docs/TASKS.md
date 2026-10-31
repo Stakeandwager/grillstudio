@@ -23,7 +23,7 @@ Status: ☐ open · ◐ in progress · ☑ done · ⛔ blocked (needs user)
 ⛔ T-3 Auth + per-user rate limit for `/api/claude` (choose Netlify Identity vs Supabase; may involve accounts).
 ⛔ T-4 Media object storage provider (R2 / Supabase / S3) — account + possible cost.
 ⛔ T-5 Long-video worker hosting (container with FFmpeg) — account + possible cost.
-⛔ T-10 Netlify read access (or user reports) so the builder can verify deploys; add Deploy Preview URL to `GRILLSTUDIO_ALLOWED_ORIGINS` if testing the Idea engine on previews.
+⛔ T-10 Deploy build status is readable via GitHub (done); runtime checks of netlify.app still need the user. add Deploy Preview URL to `GRILLSTUDIO_ALLOWED_ORIGINS` if testing the Idea engine on previews.
 ⛔ T-15 Merge PR to `main` (production release) — user approval after testing the Deploy Preview.
 
 ## User feedback inbox

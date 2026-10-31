@@ -38,4 +38,4 @@ _Updated 2026-10-31 — end of session 1 (Phase 0 complete, Phase 1 complete)._
 
 ## Branches
 - `main` — production (unchanged this session).
-- `dev/phase-0-1-foundation` — this work; PR open for Deploy Preview.
+- `dev/phase-0-1-foundation` — this work; PR #1 open; Deploy Preview built successfully: https://deploy-preview-1--grillstudio.netlify.app

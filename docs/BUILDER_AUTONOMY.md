@@ -26,7 +26,7 @@ irreversible account, domain or repository changes.
 | Limit | Effect |
 |---|---|
 | Live site `grillstudio.netlify.app` not reachable from the build sandbox (proxy 403) | Cannot verify production directly; relies on PR deploy previews + user checks. |
-| No Netlify credentials | Cannot read deploy logs or set environment variables. |
+| No Netlify credentials | Cannot read deploy logs or set env vars. Deploy *status* is readable via GitHub: `gh api repos/Stakeandwager/grillstudio/commits/<branch>/status`. |
 | `gh` CLI GraphQL unavailable; REST works through the session proxy | PRs created via REST. |
 | Google Fonts blocked in headless browser checks | Screenshots use fallback fonts. |
 | No GPU; no paid model access | Media analysis must use local/free tools or be BLOCKED. |

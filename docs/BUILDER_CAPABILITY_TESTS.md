@@ -26,7 +26,7 @@ Run: 2026-10-31, branch `dev/phase-0-1-foundation`, builder: Claude (Opus 5.5). 
 | BC-D1 | Build | `vite build` succeeds | 59 modules, 1.1 s, bundle 252 KB (82 KB gz) | PASS | build output | — |
 | BC-D2 | Built app works in a browser | No page errors, responsive | Chrome headless: Film journey works; no page errors; scrollWidth = viewport at 1280 and 390 | PASS | screenshots in PR | Fonts blocked in sandbox. |
 | BC-D3 | Test production & preview | Reach live URLs | Sandbox proxy returns 403 for netlify.app | BLOCKED | curl output | User checks the Deploy Preview. |
-| BC-D4 | Identify deployment failures / verify live | Read Netlify status | No Netlify access | BLOCKED | — | Needs Netlify read token or user report (T-10). |
+| BC-D4 | Identify deployment failures / verify a release is live | Read deploy status | Netlify reports per-commit status to GitHub; read via REST: `netlify/grillstudio/deploy-preview: success` for PR #1 | PASS (preview build status) | GitHub commit status API | Can see build success/failure, not runtime behaviour on netlify.app (BC-D3). |
 
 ## Measured limits
 

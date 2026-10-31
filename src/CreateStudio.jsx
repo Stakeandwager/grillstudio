@@ -81,11 +81,6 @@ const retime = (items, start, outDur) =>
     .filter((i) => i.end > i.start + 0.05);
 
 const HEX = (c) => c.replace("#", "0x");
-/* &HAABBGGRR — libass wants BGR, and 00 alpha means opaque */
-const assColor = (c) => {
-  const h = c.replace("#", "");
-  return `&H00${h.slice(4, 6)}${h.slice(2, 4)}${h.slice(0, 2)}`.toUpperCase();
-};
 
 function CreateStudio() {
   /* ---------- source (never mutated) ---------- */
@@ -420,7 +415,7 @@ function CreateStudio() {
       .catch(() => setLibError("That preview wouldn't stream. Try another track."));
   };
 
-  const useTrack = async (t) => {
+  const chooseTrack = async (t) => {
     stopTrackPreview();
     setStatus(`Fetching "${t.name}"…`);
     setLibError("");
@@ -990,7 +985,7 @@ function CreateStudio() {
                       </div>
                       <div className="lib-actions">
                         <button className="ghost-button small" onClick={() => togglePreviewTrack(t)}>{previewingId === t.id ? "Stop" : "Play"}</button>
-                        <button className="ember-button small" onClick={() => useTrack(t)}>Use</button>
+                        <button className="ember-button small" onClick={() => chooseTrack(t)}>Use</button>
                       </div>
                     </div>
                   ))}

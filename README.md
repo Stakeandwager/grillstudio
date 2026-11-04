@@ -9,6 +9,17 @@ your own data, and no subscription.
 
 ## Features
 
+### Film — the filmmaking engine (new, in development)
+- **Creative intention** — what you intend, what the audience should feel, what it communicates.
+- **Workflow** — Understand → Interpret → Plan → Approve → Produce → Observe → Evaluate → Correct → Verify → Deliver,
+  with plain-language gates and an explicit, revocable approval.
+- **Story breakdown** — paste a Fountain screenplay or prose; get scenes, characters, locations, continuity warnings, and
+  live-action *and* animation requirements, each with the reason and source lines.
+- **Evaluation** against the intention (evidence required), **corrections → lessons** that resurface on matching scenes,
+  **versions** and **backups**. Stored in your browser only.
+
+See [`docs/`](docs/PROJECT_STATE.md) for the mission, architecture, protocol and current state.
+
 ### Create — browser-native video editing (ffmpeg.wasm)
 - **Trim** with a two-handle timeline
 - **Text layers** with timing, position, size and color — burned into the export
@@ -37,6 +48,7 @@ Requires [Node.js](https://nodejs.org) LTS.
 ```bash
 npm install
 npm run dev
+npm run verify   # lint, tests, build, secret scan
 ```
 
 Open http://localhost:5173

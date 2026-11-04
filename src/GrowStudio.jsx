@@ -164,7 +164,7 @@ function GrowStudio() {
   const resolveChannel = async (input) => {
     const raw = input.trim();
     const idMatch = raw.match(/channel\/(UC[\w-]+)/) || raw.match(/^(UC[\w-]{20,})$/);
-    const hMatch = raw.match(/@([\w.\-]+)/);
+    const hMatch = raw.match(/@([\w.-]+)/);
     const params = { part: "snippet,statistics,contentDetails" };
     if (idMatch) params.id = idMatch[1];
     else if (hMatch) params.forHandle = "@" + hMatch[1];

@@ -14,6 +14,8 @@ _Updated 2026-10-31 — end of session 1 (Phase 0 complete, Phase 1 complete)._
 | Film — evaluation against intention (evidence required) | New | evaluation tests + UI test |
 | Film — corrections → lessons → shown on matching scenes | New | memory tests + UI test |
 | Film — versions (append-only), compare, restore; backups export/import | New | memory tests |
+| Film — shot planning from story + intention, alternatives, edits | New 2026-11-16 | shots tests + UI test |
+| Film — storyboard: drawn sketch frames; AI images (free Pollinations, or your OpenAI/Gemini key) | New 2026-11-16 | provider tests (mocked); live providers not reachable from build sandbox |
 | `/api/claude` hardened | Fixed | 8 proxy tests |
 | `npm run verify` | 0 lint issues, 55/55 tests, build OK, 0 secrets | run 2026-10-31 |
 
@@ -24,13 +26,13 @@ _Updated 2026-10-31 — end of session 1 (Phase 0 complete, Phase 1 complete)._
 | 1 | Understand the creative intention | ✅ captured and enforced by gates |
 | 2 | Analyse supplied material | ◐ text only (screenplay/prose); images/video not yet |
 | 3 | Find visual references | ❌ Phase 3 |
-| 4 | Coherent production plan | ◐ scene breakdown + needs; no shot list, schedule or budget yet |
+| 4 | Coherent production plan | ◐ scene breakdown + needs + shot list/storyboard; no schedule or budget yet |
 | 5 | Live action or animation | ◐ shared model and needs; no production tooling yet |
 | 6 | Help create material | ◐ Create editor (finishing only) |
 | 7 | Evaluate the result | ◐ structured human evaluation |
 | 8 | Receive corrections | ✅ |
 | 9 | Preserve approved knowledge | ✅ local persistence |
-| 10 | Apply lessons later | ◐ retrieved and shown; no recommender to change yet |
+| 10 | Apply lessons later | ✅ lessons change matching shot recommendations, with an explanation |
 
 ## Where to look
 - Code: `src/engine/` (rules), `src/film/` (UI), `netlify/functions/claude.mjs`.

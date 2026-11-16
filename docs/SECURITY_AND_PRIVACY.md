@@ -27,6 +27,13 @@
 - Deleting a project requires confirmation; export/import gives users their own backups. Import never overwrites an existing project.
 - The repository supports namespaces so per-user separation is ready for when auth exists. Real cross-user isolation needs server-side auth (Phase 2).
 
+## AI image generation (2026-11-16)
+
+- Off by default; storyboard uses locally drawn sketches.
+- Pollinations: prompt text (scene description, character descriptions) is sent to a third party and resulting images may be public. The UI says so before use.
+- OpenAI / Gemini: the user's own key, typed into a password field, kept in tab memory only, sent only to that provider. Charges go to the user's account.
+- No user photos, faces or voices are sent; prompts are text built from the plan. Using a real person's likeness would need explicit authorization (directive §2).
+
 ## Controls in CI / `npm run verify`
 
 - `scripts/check-secrets.mjs` scans `src`, `public`, `netlify`, `dist`, `docs`, `README.md`.

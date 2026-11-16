@@ -198,3 +198,35 @@
   .film-needs .film-why { grid-column: 1; }
   .film-titlebar h2 { font-size: 24px; }
 }
+
+/* shots & storyboard */
+.sb-summary p { margin: 4px 0; }
+.sb-settings { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 10px 0; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 12px; }
+.sb-settings .text-input { flex: 1 1 220px; width: auto; }
+.sb-settings .panel-note { flex-basis: 100%; margin: 0; }
+.sb-scene { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); }
+.sb-scene-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.sb-scene-head strong { font-family: var(--font-mono); color: var(--ember-1); }
+.sb-scene-head .film-why { margin: 4px 0 0; }
+.sb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 12px; }
+.sb-card { border: 1px solid var(--line); border-radius: 12px; background: var(--coal); overflow: hidden; display: flex; flex-direction: column; }
+.sb-card.edited { border-color: var(--ember-2); }
+.sb-image { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.sb-image img, .sb-frame { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sb-busy { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.55); color: var(--ember-1); font-family: var(--font-mono); font-size: 13px; }
+.sb-meta { padding: 10px 12px 12px; font-size: 14px; display: flex; flex-direction: column; gap: 4px; }
+.sb-meta p { margin: 2px 0; line-height: 1.45; }
+.sb-meta .film-kind { display: inline-block; margin-left: 4px; }
+.sb-meta details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+.sb-alt { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; margin: 4px 0; }
+.sb-prompt { font-family: var(--font-mono); font-size: 11px; word-break: break-word; }
+.sb-error { color: #ff9b7a; font-size: 13px; }
+.sb-editor { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.sb-editor .text-input { width: 100%; }
+
+@media print {
+  .header, .film-projectbar, .film-workflow, .film-sections, .sb-settings, .panel-actions, .lib-actions, .sb-editor, .film-row, details { display: none !important; }
+  body, .panel, .sb-card { background: #fff !important; color: #000 !important; box-shadow: none !important; }
+  .sb-grid { grid-template-columns: repeat(3, 1fr); }
+  .sb-card { break-inside: avoid; border-color: #999; }
+}

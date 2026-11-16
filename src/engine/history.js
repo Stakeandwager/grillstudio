@@ -75,6 +75,10 @@ export function diffProjects(a, b) {
   const ca = Object.keys(a.characterNotes || {}).length;
   const cb = Object.keys(b.characterNotes || {}).length;
   if (stableStringify(a.characterNotes || {}) !== stableStringify(b.characterNotes || {})) push("characterNotes", `${ca} notes`, `${cb} notes`);
+  const oa = Object.keys(a.shotOverrides || {}).length;
+  const ob = Object.keys(b.shotOverrides || {}).length;
+  if (stableStringify(a.shotOverrides || {}) !== stableStringify(b.shotOverrides || {})) push("shotOverrides", `${oa} edited shots`, `${ob} edited shots`);
+  if ((a.visualStyle || "") !== (b.visualStyle || "")) push("visualStyle", short(a.visualStyle), short(b.visualStyle));
   return changes;
 }
 

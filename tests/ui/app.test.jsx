@@ -102,3 +102,28 @@ describe("film workspace journey", () => {
     expect(screen.getByRole("alert").textContent).toMatch(/needs evidence/);
   });
 });
+
+describe("shots & storyboard", () => {
+  it("plans shots from the story and intention, draws sketches, and lets you pick an alternative", () => {
+    window.history.replaceState(null, "", "/?studio=film");
+    render(<App />);
+    type("Working title", "Boards");
+    click("Create project");
+    type("What should the audience feel?", "Loneliness easing into warmth");
+    click("Save intention");
+    fireEvent.click(screen.getByRole("tab", { name: "Story" }));
+    click("Load a short sample scene");
+    click("Analyse into scenes");
+    fireEvent.click(screen.getByRole("tab", { name: "Shots & storyboard" }));
+    expect(screen.getByText(/Isolation/, { selector: "strong" })).toBeTruthy();
+    expect(screen.getAllByRole("img").length).toBeGreaterThan(5);
+    const before = screen.getAllByText(/^1\. /)[0].textContent;
+    fireEvent.click(screen.getAllByRole("button", { name: "Use this" })[0]);
+    expect(screen.getAllByText(/^1\. /)[0].textContent).not.toBe(before);
+    // Image providers are opt-in; key providers need a key.
+    fireEvent.change(screen.getByLabelText("Image provider"), { target: { value: "openai" } });
+    expect(screen.getAllByRole("button", { name: "Generate image" })[0].disabled).toBe(true);
+    fireEvent.change(screen.getByLabelText("Image provider"), { target: { value: "pollinations" } });
+    expect(screen.getAllByRole("button", { name: "Generate image" })[0].disabled).toBe(false);
+  });
+});

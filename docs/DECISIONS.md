@@ -54,3 +54,20 @@ documented and tracked (T-3).
 
 ### D-013 · Tooling: Vitest + Testing Library + oxlint
 Vitest shares Vite's config; oxlint was already configured. `npm run verify` is the release gate.
+
+### D-014 · 2026-11-16 · Shot planning is rule-based, tone-driven and explainable
+Shots come from the scene (dialogue, silence, objects, time of day) and the *audience feeling* in the intention, read as an
+ordered arc (e.g. isolation → warmth). Every shot has a reason and alternatives; filmmaker edits are stored as overrides
+by shot id and survive re-planning.
+
+### D-015 · Lessons change shots only when they match the scene specifically
+First version let a "rainy night street" lesson change every scene because all scenes shared the feeling and the main
+character. Now a lesson changes a scene only if it matches ≥2 scene-specific terms (place, time, int/ext, objects);
+otherwise it is shown for reference. Each change records the lesson and the previous value.
+
+### D-016 · AI images through replaceable adapters; user-owned keys; free option
+User asked for AI image generation. Adapters: Pollinations (free, no key, rate-limited, prompt text public), OpenAI
+`gpt-image-1` and Gemini `gemini-2.5-flash-image` with the **user's own key** held in tab memory and sent only to that
+provider — the owner is never billed and no server key is involved. Images stored in IndexedDB, never uploaded by us.
+Sketch frames (SVG) are the default so the storyboard works offline and free. Prompts are built from the plan + character
+references + a per-subject seed to help consistency. Netlify's `COEP: credentialless` permits the cross-origin images.

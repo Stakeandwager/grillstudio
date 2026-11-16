@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useFilmStore } from "./useFilmStore.js";
 import { WorkflowBar } from "./WorkflowBar.jsx";
+import ShotsPanel from "./ShotsPanel.jsx";
 import { IntentionPanel, StoryPanel, BreakdownPanel, CharactersPanel, EvaluatePanel, LessonsPanel, HistoryPanel } from "./panels.jsx";
 import { PRODUCTION_MODES, setMode } from "../engine/index.js";
 
@@ -9,6 +10,7 @@ const SECTIONS = [
   ["story", "Story"],
   ["breakdown", "Breakdown"],
   ["characters", "Characters"],
+  ["shots", "Shots & storyboard"],
   ["evaluate", "Evaluate"],
   ["lessons", "Lessons"],
   ["history", "History"],
@@ -208,6 +210,7 @@ export default function FilmStudio() {
           {section === "story" && <StoryPanel key={panelKey} store={store} sample={SAMPLE} onAnalysed={() => setSection("breakdown")} />}
           {section === "breakdown" && <BreakdownPanel store={store} onGoStory={() => setSection("story")} />}
           {section === "characters" && <CharactersPanel key={panelKey} store={store} />}
+          {section === "shots" && <ShotsPanel key={project.id} store={store} onGoStory={() => setSection("story")} />}
           {section === "evaluate" && <EvaluatePanel store={store} />}
           {section === "lessons" && <LessonsPanel store={store} />}
           {section === "history" && <HistoryPanel store={store} />}

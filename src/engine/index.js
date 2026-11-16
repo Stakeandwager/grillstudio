@@ -9,3 +9,5 @@ export * from "./evaluation.js";
 export * from "./history.js";
 export * from "./lessons.js";
 export * from "./storage.js";
+export * from "./shots.js";
+export * from "./imagePrompt.js";
